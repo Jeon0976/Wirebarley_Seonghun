@@ -23,7 +23,7 @@ private struct MockNetworkConfigurable: NetworkConfigurable {
     var queryParameters: [String : String] = [:]
 }
 
-private struct MockNetworkService: NetworkService {
+private final class MockNetworkService: NetworkService {
     let config: NetworkConfigurable
     var mockSessionManager: NetworkSessionManager
         
@@ -47,7 +47,7 @@ private struct MockNetworkService: NetworkService {
     }
 }
 
-private struct MockNetworkSessionManager: NetworkSessionManager {
+private final class MockNetworkSessionManager: NetworkSessionManager {
     var response: HTTPURLResponse?
     var data: Data = Data()
     var error: Error?

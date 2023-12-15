@@ -19,7 +19,7 @@ final class Wirebaley_JeonSeongHunUITests: XCTestCase {
         sleep(1)
     }
 
-    func test_휠_움직이고_Amout_값_입력하기() throws {
+    func test_휠_움직이고_Amout_값_입력_후_결과값_확인하기() throws {
         // given
         let textField = app.textFields["amountTextField"]
         let picker = app.pickers["Picker"]
@@ -40,13 +40,15 @@ final class Wirebaley_JeonSeongHunUITests: XCTestCase {
     func test_값_초과하고_알람_확인하기() throws {
         // given
         let textField = app.textFields["amountTextField"]
+        let alertButton = app.alerts.buttons["OK"]
+        
         
         // when
         textField.tap()
-        textField.typeText("10000")
-        
+        textField.typeText("100000")
+                
         // then
-        XCTAssertNotNil(app.alerts)
+        XCTAssertTrue(alertButton.exists)
     }
 
 }

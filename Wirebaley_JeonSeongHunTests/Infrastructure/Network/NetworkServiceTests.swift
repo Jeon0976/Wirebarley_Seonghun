@@ -30,13 +30,13 @@ private enum MockNetworkError: Error, Equatable {
     case notConnected
 }
 
-private class MockNetworkConfigurable: NetworkConfigurable {
+private final class MockNetworkConfigurable: NetworkConfigurable {
     var baseURL: URL = URL(string: "http://test.com")!
     var headers: [String : String] = [:]
     var queryParameters: [String : String] = [:]
 }
 
-private struct MockNetworkSessionManager: NetworkSessionManager {
+private final class MockNetworkSessionManager: NetworkSessionManager {
     var response: HTTPURLResponse?
     var data: Data = Data()
     var error: Error?
@@ -57,7 +57,7 @@ private struct MockNetworkSessionManager: NetworkSessionManager {
     }
 }
 
-private class MockNetworkErrorLogger: NetworkErrorLogger {
+private final class MockNetworkErrorLogger: NetworkErrorLogger {
     var loggedErrors: [Error] = []
     
     func log(responseData data: Data?) { }
