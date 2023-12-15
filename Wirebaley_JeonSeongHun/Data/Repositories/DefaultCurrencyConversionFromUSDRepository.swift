@@ -16,9 +16,15 @@ final class DefaultCurrencyConversionFromUSDRepository: CurrencyConversionFromUS
         self.dataTransferService = dataTransferService
     }
     
-    func fetchCurrencys(currencies: [String], source: String) async throws -> CurrenciesFromUSD {
+    func fetchCurrencys(
+        currencies: [String],
+        source: String
+    ) async throws -> CurrenciesFromUSD {
         let currencies = currencies.joined(separator: ",")
-        let requestDTO = CurrenciesConversionRequestDTO(currencies: currencies, source: source)
+        let requestDTO = CurrenciesConversionRequestDTO(
+            currencies: currencies,
+            source: source
+        )
         
         let endPoint = APIEndpoints.getCurrencyConversion(with: requestDTO)
         

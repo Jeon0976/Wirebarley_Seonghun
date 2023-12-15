@@ -69,7 +69,10 @@ final class DefaultNetworkSessionManager: NetworkSessionManager {
         
         guard let httpResponse = response as? HTTPURLResponse,
               200...299 ~= httpResponse.statusCode else {
-            throw NetworkError.error(statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0, data: data)
+            throw NetworkError.error(
+                statusCode: (response as? HTTPURLResponse)?.statusCode ?? 0,
+                data: data
+            )
         }
         
         return data

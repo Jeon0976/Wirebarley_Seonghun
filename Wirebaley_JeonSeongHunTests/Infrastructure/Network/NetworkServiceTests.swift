@@ -50,7 +50,10 @@ private final class MockNetworkSessionManager: NetworkSessionManager {
         
         guard let httpResponse = response,
               200...299 ~= httpResponse.statusCode else {
-            throw MockNetworkError.networkError(statusCode: (response)?.statusCode ?? 0, data: data)
+            throw MockNetworkError.networkError(
+                statusCode: (response)?.statusCode ?? 0,
+                data: data
+            )
         }
         
         return data
@@ -93,7 +96,12 @@ final class NetworkServiceTests: XCTestCase {
         // given
         let expectedResponseData = "Data".data(using: .utf8)!
         mockNetworkSessionManager.data = expectedResponseData
-        mockNetworkSessionManager.response = HTTPURLResponse(url: URL(string: "http://test.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+        mockNetworkSessionManager.response = HTTPURLResponse(
+            url: URL(string: "http://test.com")!,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )
 
         networkService = DefaultNetworkService(
             config: mockNetworkConfigurable,
@@ -104,7 +112,12 @@ final class NetworkServiceTests: XCTestCase {
         var data = Data()
         // when
         do {
-            data = try await networkService.request(endPoint: MockEndpoint(path: "http://test.com", method: .get))
+            data = try await networkService.request(
+                endPoint: MockEndpoint(
+                    path: "http://test.com",
+                    method: .get
+                )
+            )
         } catch { }
         
         // then
@@ -115,7 +128,12 @@ final class NetworkServiceTests: XCTestCase {
         // given
         let expectedResponseData = "Data".data(using: .utf8)!
         mockNetworkSessionManager.data = expectedResponseData
-        mockNetworkSessionManager.response = HTTPURLResponse(url: URL(string: "http://test.com")!, statusCode: 400, httpVersion: nil, headerFields: nil)
+        mockNetworkSessionManager.response = HTTPURLResponse(
+            url: URL(string: "http://test.com")!,
+            statusCode: 400,
+            httpVersion: nil,
+            headerFields: nil
+        )
 
         networkService = DefaultNetworkService(
             config: mockNetworkConfigurable,
@@ -126,9 +144,17 @@ final class NetworkServiceTests: XCTestCase {
         
         // when
         do {
-            let _ = try await networkService.request(endPoint: MockEndpoint(path: "http://test.com", method: .get))
+            let _ = try await networkService.request(
+                endPoint: MockEndpoint(
+                    path: "http://test.com",
+                    method: .get
+                )
+            )
         } catch let error as MockNetworkError {
-            if case .networkError(statusCode: let statusCode, data: _) = error {
+            if case .networkError(
+                statusCode: let statusCode,
+                data: _
+            ) = error {
                 resultStatusCode = statusCode
             }
         } catch { }
@@ -154,7 +180,12 @@ final class NetworkServiceTests: XCTestCase {
 
         // when
         do {
-            let _ = try await networkService.request(endPoint: MockEndpoint(path: "http://test.com", method: .get))
+            let _ = try await networkService.request(
+                endPoint: MockEndpoint(
+                    path: "http://test.com",
+                    method: .get
+                )
+            )
         } catch let error as MockNetworkError {
             resultError = error
         } catch { }

@@ -28,8 +28,9 @@ final class Observable<T> {
     }
     
     @discardableResult
-    fileprivate func observe(on observer: AnyObject,
-                             observerBlock: @escaping (T) -> Void
+    fileprivate func observe(
+        on observer: AnyObject,
+        observerBlock: @escaping (T) -> Void
     ) -> Observable<T> {
         observers.append(Observer(observer: observer, block: observerBlock))
         observerBlock(value)
@@ -43,7 +44,9 @@ final class Observable<T> {
         }
     }
     
-    fileprivate func removeDisposable(for observer: AnyObject) -> () -> Void {
+    fileprivate func removeDisposable(
+        for observer: AnyObject
+    ) -> () -> Void {
         return { [weak self] in
             self?.remove(observer: observer)
         }
@@ -53,9 +56,10 @@ final class Observable<T> {
         observers = observers.filter { $0.observer !== observer }
     }
     
-    func subscribe(on observer: AnyObject,
-                   disposeBag: DisposeBag,
-                   onNext: ((T) -> Void)? = nil
+    func subscribe(
+        on observer: AnyObject,
+        disposeBag: DisposeBag,
+        onNext: ((T) -> Void)? = nil
     ) -> Subscription<T> {
         return Subscription(observable: self,
                             observer: observer,

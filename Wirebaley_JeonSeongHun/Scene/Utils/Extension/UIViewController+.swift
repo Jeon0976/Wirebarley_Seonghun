@@ -14,21 +14,24 @@ extension UIViewController {
         preferredStyle: UIAlertController.Style = .alert,
         completion: (() -> Void)? = nil
     ) {
-        let alert = UIAlertController(title: title,
-                                      message: message,
-                                      preferredStyle: .alert
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
         )
         
         let title = NSLocalizedString("OK", comment: "")
         
-        alert.addAction(UIAlertAction(title: title,
-                                      style: .default,
-                                      handler: nil)
+        alert.addAction(UIAlertAction(
+            title: title,
+            style: .default,
+            handler: nil)
         )
         
-        self.present(alert,
-                     animated: true,
-                     completion: completion
+        self.present(
+            alert,
+            animated: true,
+            completion: completion
         )
     }
 }

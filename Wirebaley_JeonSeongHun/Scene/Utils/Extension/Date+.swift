@@ -8,7 +8,7 @@
 import Foundation
 
 extension Date {
-    static var nowTime: String = {
+    static let nowTime: String = {
         return DateFormatter.customDateTime.string(from: Date())
     }()
 }

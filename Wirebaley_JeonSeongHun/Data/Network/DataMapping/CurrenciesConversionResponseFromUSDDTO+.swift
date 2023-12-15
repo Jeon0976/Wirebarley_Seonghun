@@ -33,10 +33,11 @@ extension CurrenciesConversionResponseFromUSDDTO {
 
 extension CurrenciesConversionResponseFromUSDDTO {
     func toDomain() -> CurrenciesFromUSD {
-        return .init(source: source,
-                     KRW: quotes.krw,
-                     JPY: quotes.jpy,
-                     PHP: quotes.php
+        return .init(
+            source: source,
+            KRW: quotes.krw,
+            JPY: quotes.jpy,
+            PHP: quotes.php
         )
     }
 }

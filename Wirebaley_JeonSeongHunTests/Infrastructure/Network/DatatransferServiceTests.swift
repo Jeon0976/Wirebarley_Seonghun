@@ -76,19 +76,32 @@ final class DatatransferServiceTests: XCTestCase {
         
         let responseData = #"{"test": "test"}"#.data(using: .utf8)!
         
-        networkSessionManager.response = HTTPURLResponse(url: URL(string: "http://test.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+        networkSessionManager.response = HTTPURLResponse(
+            url: URL(string: "http://test.com")!,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )
         networkSessionManager.data = responseData
         
         var result: MockModel?
         let expectedResult = MockModel(test: "test")
 
-        let networkService = MockNetworkService(config: networkConfig, mockSessionManager: networkSessionManager)
+        let networkService = MockNetworkService(
+            config: networkConfig,
+            mockSessionManager: networkSessionManager
+        )
         
         let dataTransfer = DefaultDataTransferService(networkService: networkService)
         
         // when
         do {
-            result = try await dataTransfer.request(with: Endpoint<MockModel>(path: "http://test.com", method: .get))
+            result = try await dataTransfer.request(
+                with: Endpoint<MockModel>(
+                    path: "http://test.com",
+                    method: .get
+                )
+            )
         } catch { }
         
         // then
@@ -102,18 +115,31 @@ final class DatatransferServiceTests: XCTestCase {
         
         let responseData = #"{"test": 1}"#.data(using: .utf8)!
         
-        networkSessionManager.response = HTTPURLResponse(url: URL(string: "http://test.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+        networkSessionManager.response = HTTPURLResponse(
+            url: URL(string: "http://test.com")!,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )
         networkSessionManager.data = responseData
         
         var result: Error?
 
-        let networkService = MockNetworkService(config: networkConfig, mockSessionManager: networkSessionManager)
+        let networkService = MockNetworkService(
+            config: networkConfig,
+            mockSessionManager: networkSessionManager
+        )
         
         let dataTransfer = DefaultDataTransferService(networkService: networkService)
         
         // when
         do {
-            let _ = try await dataTransfer.request(with: Endpoint<MockModel>(path: "http://test.com", method: .get))
+            let _ = try await dataTransfer.request(
+                with: Endpoint<MockModel>(
+                    path: "http://test.com",
+                    method: .get
+                )
+            )
         } catch {
             result = error
         }

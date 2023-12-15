@@ -117,10 +117,9 @@ class CurrencyConversionViewController: UIViewController {
     private lazy var recipientValuelabel: UILabel = {
         let lbl = UILabel()
         
+        lbl.text = NSLocalizedString("KRW", comment: "")
         lbl.textColor = .black
         lbl.font = .systemFont(ofSize: 18, weight: .regular)
-        
-        lbl.text = NSLocalizedString("KRW", comment: "")
         
         return lbl
     }()
@@ -128,20 +127,19 @@ class CurrencyConversionViewController: UIViewController {
     private lazy var exchangeRateValueLabel: UILabel = {
         let lbl = UILabel()
         
+        lbl.text = "0.00 / USD"
         lbl.textColor = .black
         lbl.font = .systemFont(ofSize: 18, weight: .regular)
-        
-        lbl.text = "0.00 / USD"
-
+    
         return lbl
     }()
     
     private lazy var timeValueLabel: UILabel = {
         let lbl = UILabel()
-        
+
+        lbl.text = Date.nowTime
         lbl.textColor = .black
         lbl.font = .systemFont(ofSize: 18, weight: .regular)
-        lbl.text = Date.nowTime
         
         return lbl
     }()
@@ -159,16 +157,21 @@ class CurrencyConversionViewController: UIViewController {
     private lazy var transferAmountValueTextField: UITextField = {
         let textField = UITextField()
         
+        textField.accessibilityIdentifier = "amountTextField"
         textField.delegate = self
+        
         textField.placeholder = "0"
-        textField.attributedPlaceholder = NSAttributedString(string: "0", attributes: [.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "0",
+            attributes: [.foregroundColor: UIColor.darkGray]
+        )
         textField.textColor = .black
         textField.font = .systemFont(ofSize: 18, weight: .regular)
         textField.textAlignment = .right
+        
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
         textField.keyboardType = .numberPad
-        textField.accessibilityIdentifier = "amountTextField"
         
         let keyboardToolbar = UIToolbar()
         keyboardToolbar.sizeToFit()
@@ -197,13 +200,12 @@ class CurrencyConversionViewController: UIViewController {
     private lazy var resultLabel: UILabel = {
         let lbl = UILabel()
         
+        lbl.accessibilityIdentifier = "Result"
+        lbl.text = NSLocalizedString("BeforeReceivedAmount", comment: "")
         lbl.textColor = .black
         lbl.font = .systemFont(ofSize: 20, weight: .bold)
         lbl.textAlignment = .center
         lbl.numberOfLines = 2
-        
-        lbl.text = NSLocalizedString("BeforeReceivedAmount", comment: "")
-        lbl.accessibilityIdentifier = "Result"
         
         return lbl
     }()
@@ -211,12 +213,12 @@ class CurrencyConversionViewController: UIViewController {
     private lazy var countryPickerView: UIPickerView = {
         let picker = UIPickerView()
         
+        picker.accessibilityIdentifier = "Picker"
         picker.backgroundColor = .white
         picker.tintColor = .black
         picker.delegate = self
         picker.dataSource = self
         picker.selectRow(0, inComponent: 0, animated: false)
-        picker.accessibilityIdentifier = "Picker"
         
         return picker
     }()
@@ -289,39 +291,39 @@ class CurrencyConversionViewController: UIViewController {
         NSLayoutConstraint.activate([
             mainLabel.topAnchor.constraint(
                 equalTo: self.view.safeAreaLayoutGuide.topAnchor,
-                constant: 32
-            ),
+                constant: 32),
             mainLabel.centerXAnchor.constraint(
-                equalTo: self.view.centerXAnchor
-            ),
+                equalTo: self.view.centerXAnchor),
             
-            horizontalLabelStackView.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 32),
-            
-            horizontalLabelStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
+            horizontalLabelStackView.topAnchor.constraint(
+                equalTo: mainLabel.bottomAnchor,
+                constant: 32),
+            horizontalLabelStackView.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor,
+                constant: 16),
             
             resultLabel.topAnchor.constraint(
                 equalTo: horizontalLabelStackView.bottomAnchor,
-                constant: 64
-            ),
-            resultLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16),
-            resultLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16),
+                constant: 64),
+            resultLabel.leadingAnchor.constraint(
+                equalTo: self.view.leadingAnchor,
+                constant: 16),
+            resultLabel.trailingAnchor.constraint(
+                equalTo: self.view.trailingAnchor,
+                constant: -16),
             
             timeValueLabel.trailingAnchor.constraint(
                 equalTo: self.view.safeAreaLayoutGuide.trailingAnchor,
-                constant: -16
-            ),
+                constant: -16),
             
             transferAmountValueTextField.widthAnchor.constraint(
-                equalToConstant: 120
-            ),
+                equalToConstant: 120),
             
             countryPickerView.bottomAnchor.constraint(
                 equalTo: self.view.safeAreaLayoutGuide.bottomAnchor,
-                constant: -32
-            ),
+                constant: -32),
             countryPickerView.widthAnchor.constraint(
-                equalTo: self.view.widthAnchor
-            )
+                equalTo: self.view.widthAnchor)
         ])
     }
     
@@ -385,26 +387,30 @@ extension CurrencyConversionViewController: UIPickerViewDataSource {
         1
     }
     
-    func pickerView(_ pickerView: UIPickerView, 
-                    numberOfRowsInComponent component: Int
+    func pickerView(
+        _ pickerView: UIPickerView,
+        numberOfRowsInComponent component: Int
     ) -> Int {
         viewModel.currencies.count
     }
 }
 
 extension CurrencyConversionViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, 
-                    attributedTitleForRow row: Int,
-                    forComponent component: Int
+    func pickerView(
+        _ pickerView: UIPickerView,
+        attributedTitleForRow row: Int,
+        forComponent component: Int
     ) -> NSAttributedString? {
-        return NSAttributedString(string: NSLocalizedString("\(viewModel.currencies[row])", comment: ""),
-                                  attributes: [.foregroundColor: UIColor.black]
+        return NSAttributedString(
+            string: NSLocalizedString("\(viewModel.currencies[row])", comment: ""),
+            attributes: [.foregroundColor: UIColor.black]
         )
     }
     
-    func pickerView(_ pickerView: UIPickerView, 
-                    didSelectRow row: Int,
-                    inComponent component: Int
+    func pickerView(
+        _ pickerView: UIPickerView,
+        didSelectRow row: Int,
+        inComponent component: Int
     ) {
         viewModel.selectedIndex = row
     }

@@ -11,7 +11,10 @@ final class AppDIContainer {
     lazy var appConfiguration = AppConfiguration()
     
     lazy var apiDataTransferService: DataTransferService = {
-        let config = APIDataNetworkConfig(baseURL: URL(string: appConfiguration.apiBaseURL)!, queryParameters: ["access_key": appConfiguration.apiKey ?? "", "format": "1"])
+        let config = APIDataNetworkConfig(
+            baseURL: URL(string: appConfiguration.apiBaseURL)!,
+            queryParameters: ["access_key": appConfiguration.apiKey ?? "", "format": "1"]
+        )
         
         let apiDataNetwork = DefaultNetworkService(config: config)
         
@@ -20,7 +23,9 @@ final class AppDIContainer {
     
     func makeCurrencyConversionDIContainer() -> CurrencyConversionDIContainer {
         
-        let dependencies = CurrencyConversionDIContainer.Dependencies(apiDataTransferService: apiDataTransferService)
+        let dependencies = CurrencyConversionDIContainer.Dependencies(
+            apiDataTransferService: apiDataTransferService
+        )
         
         return CurrencyConversionDIContainer(dependencies: dependencies)
     }

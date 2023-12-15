@@ -31,9 +31,16 @@ final class Wirebaley_JeonSeongHunUITests: XCTestCase {
         textField.typeText("1000")
         
         // then
-        XCTAssertNotEqual(result, NSLocalizedString("BeforeReceivedAmount", comment: ""))
-        XCTAssertNotEqual(result,
-                          String(format: NSLocalizedString("ReceivedAmount", comment: ""),"0.0 PHP")
+        XCTAssertNotEqual(
+            result,
+            NSLocalizedString("BeforeReceivedAmount", comment: "")
+        )
+        XCTAssertNotEqual(
+            result,
+            String(
+                format: NSLocalizedString("ReceivedAmount", comment: ""),
+                "0.0 PHP"
+            )
         )
     }
     
@@ -50,5 +57,4 @@ final class Wirebaley_JeonSeongHunUITests: XCTestCase {
         // then
         XCTAssertTrue(alertButton.exists)
     }
-
 }

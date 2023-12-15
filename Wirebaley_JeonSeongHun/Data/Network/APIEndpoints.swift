@@ -8,11 +8,13 @@
 import Foundation
 
 struct APIEndpoints {
-    static func getCurrencyConversion(with currencyConversionRequestDTO: CurrenciesConversionRequestDTO
+    static func getCurrencyConversion(
+        with currencyConversionRequestDTO: CurrenciesConversionRequestDTO
     ) -> Endpoint<CurrenciesConversionResponseFromUSDDTO> {
-        return Endpoint(path: "live",
-                        method: .get,
-                        queryParametersEncodable: currencyConversionRequestDTO
+        return Endpoint(
+            path: "live",
+            method: .get,
+            queryParametersEncodable: currencyConversionRequestDTO
         )
     }
 }

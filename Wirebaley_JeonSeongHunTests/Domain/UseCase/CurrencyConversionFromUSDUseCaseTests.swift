@@ -13,13 +13,21 @@ private enum MockError: Error {
     case failedFetcing
 }
 
-private let currenciesFromUSD: CurrenciesFromUSD = CurrenciesFromUSD(source: "USD", KRW: 10.00, JPY: 10.00, PHP: 10.00)
+private let currenciesFromUSD: CurrenciesFromUSD = CurrenciesFromUSD(
+    source: "USD",
+    KRW: 10.00, 
+    JPY: 10.00,
+    PHP: 10.00
+)
 
 private final class MockCurrencyConversionFromUSDRepository: CurrencyConversionFromUSDRepository {
     var mockCurrenciesFromUSD = currenciesFromUSD
     var isReturnError = false
     
-    func fetchCurrencys(currencies: [String], source: String) async throws -> CurrenciesFromUSD {
+    func fetchCurrencys(
+        currencies: [String],
+        source: String
+    ) async throws -> CurrenciesFromUSD {
         if isReturnError {
             throw MockError.failedFetcing
         }
@@ -37,7 +45,9 @@ final class CurrencyConversionFromUSDUseCaseTests: XCTestCase {
         
         repository = MockCurrencyConversionFromUSDRepository()
         
-        usecase = DefaultCurrencyConversionFromUSDUseCase(currencyConversionFromUSDRepository: repository)
+        usecase = DefaultCurrencyConversionFromUSDUseCase(
+            currencyConversionFromUSDRepository: repository
+        )
     }
 
     override func tearDownWithError() throws {
@@ -49,7 +59,10 @@ final class CurrencyConversionFromUSDUseCaseTests: XCTestCase {
     
     func test_CurrenicesFromUSD_Fetch_성공할때() async {
         // given
-        let requestValue = CurrencyConversionRequestValue(source: "USD", currencies: ["KRW", "JPY", "PHP"])
+        let requestValue = CurrencyConversionRequestValue(
+            source: "USD",
+            currencies: ["KRW", "JPY", "PHP"]
+        )
         
         var result: CurrenciesFromUSD?
         // when
@@ -63,7 +76,10 @@ final class CurrencyConversionFromUSDUseCaseTests: XCTestCase {
     
     func test_CurrenicesFromUSD_Fetch_실패할때() async {
         // given
-        let requestValue = CurrencyConversionRequestValue(source: "USD", currencies: ["KRW", "JPY", "PHP"])
+        let requestValue = CurrencyConversionRequestValue(
+            source: "USD",
+            currencies: ["KRW", "JPY", "PHP"]
+        )
         repository.isReturnError = true
         
         // when

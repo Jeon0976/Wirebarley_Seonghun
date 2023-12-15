@@ -31,7 +31,13 @@ final class NetworkSessionManagerTests: XCTestCase {
         try XCTSkipUnless(networkMonitor.isReachable)
         
         // given
-        let urlString = "\(appConfiguration.apiBaseURL)/live?access_key=\(appConfiguration.apiKey ?? "")&source=USD"
+        let urlString =
+        """
+        \(appConfiguration.apiBaseURL)/live
+        ?access_key=\(appConfiguration.apiKey ?? "")
+        &source=USD
+        """
+        
         let url = URL(string: urlString)!
         let request = URLRequest(url: url)
         

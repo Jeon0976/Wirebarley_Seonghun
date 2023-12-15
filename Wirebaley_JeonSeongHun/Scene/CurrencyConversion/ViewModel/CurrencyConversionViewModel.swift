@@ -22,6 +22,7 @@ final class CurrencyConversionViewModel {
     ]
     
     // MARK: - Input
+    
     var selectedIndex: Int {
         didSet {
             inputData()
@@ -60,18 +61,24 @@ final class CurrencyConversionViewModel {
         
         self.transferAmount = 0
         self.selectedIndex = 0
-        self.currenciesFromUSD = CurrenciesFromUSD(source: source, KRW: 0.0, JPY: 0.0, PHP: 0.0)
+        self.currenciesFromUSD = CurrenciesFromUSD(
+            source: source,
+            KRW: 0.0,
+            JPY: 0.0,
+            PHP: 0.0
+        )
     }
     
     // MARK: - 메소드
     func fetchCurrenciesFromUSD() {
         Task {
-            guard let value = try? await currencyConversionFromUSDUseCase.execute(requestValue: .init(source: source, currencies: currencies)) else {
+            guard let value = try? await currencyConversionFromUSDUseCase.execute(
+                requestValue: .init(source: source, currencies: currencies)
+            ) else {
                 error.value = NSLocalizedString("Retry", comment: "")
-                let errorValue = CurrenciesFromUSD(source: source, KRW: 0.0, JPY: 0.0, PHP: 0.0)
-                updateCurrenciesFromUSD(with: errorValue)
                 return
             }
+            
             updateCurrenciesFromUSD(with: value)
         }
     }
@@ -94,10 +101,13 @@ final class CurrencyConversionViewModel {
     private func updateTansferAmount(with amount: Int) {
         let rate = selectedRecipientInfo.value.rate
 
-        let resultAmount = (rate * Double(transferAmount)).formatCurrency + " " + selectedRecipientInfo.value.currency
+        let resultAmount = (rate * Double(transferAmount)).formatCurrency
+        + " "
+        + selectedRecipientInfo.value.currency
         
-        let result = String(format: NSLocalizedString("ReceivedAmount", comment: ""),
-                            resultAmount
+        let result = String(
+            format: NSLocalizedString("ReceivedAmount", comment: ""),
+            resultAmount
         )
         
         receivedAmount.value = result

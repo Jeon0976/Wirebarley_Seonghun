@@ -17,7 +17,9 @@ enum DataTransferError: Error {
 protocol DataTransferService {
     typealias CompletionHandler<T> = (Result<T, DataTransferError>) -> Void
     
-    func request<T: Decodable, E: ResponseRequestable>(with endponit: E) async throws -> T where E.Response == T
+    func request<T: Decodable, E: ResponseRequestable>(
+        with endponit: E
+    ) async throws -> T where E.Response == T
 }
 
 protocol DataTransferErrorResolver {
@@ -47,7 +49,8 @@ final class DefaultDataTransferService: DataTransferService {
         self.errorLogger = errorLogger
     }
     
-    func request<T, E>(with endponit: E) async throws -> T where T : Decodable, T == E.Response, E : ResponseRequestable {
+    func request<T, E>(with endponit: E
+    ) async throws -> T where T : Decodable, T == E.Response, E : ResponseRequestable {
         do {
             let data = try await networkService.request(endPoint: endponit)
             do {
@@ -62,7 +65,9 @@ final class DefaultDataTransferService: DataTransferService {
         }
     }
     
-    private func errorChangeableForDataTransferError(networkError: NetworkError) -> DataTransferError {
+    private func errorChangeableForDataTransferError(
+        networkError: NetworkError
+    ) -> DataTransferError {
         let error =  self.errorResolver.resolve(error: networkError)
         return error is NetworkError ? .networkFailure(networkError) : .resolvedNetworkFailure(error)
     }
@@ -85,7 +90,8 @@ final class JSONResponseDecoder: ResponseDecoder {
     
     init() { }
     
-    func decode<T>(_ data: Data) throws -> T where T : Decodable {
+    func decode<T>(_ data: Data
+    ) throws -> T where T : Decodable {
         return try jsonDecoder.decode(T.self, from: data)
     }
 }

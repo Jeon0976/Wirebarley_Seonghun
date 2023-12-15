@@ -8,7 +8,9 @@
 import Foundation
 
 protocol CurrencyConversionFromUSDUseCase {
-    func execute(requestValue: CurrencyConversionRequestValue) async throws -> CurrenciesFromUSD
+    func execute(
+        requestValue: CurrencyConversionRequestValue
+    ) async throws -> CurrenciesFromUSD
 }
 
 struct CurrencyConversionRequestValue {
@@ -26,7 +28,9 @@ final class DefaultCurrencyConversionFromUSDUseCase: CurrencyConversionFromUSDUs
         self.currencyConversionFromUSDRepository = currencyConversionFromUSDRepository
     }
     
-    func execute(requestValue: CurrencyConversionRequestValue) async throws -> CurrenciesFromUSD {
+    func execute(
+        requestValue: CurrencyConversionRequestValue
+    ) async throws -> CurrenciesFromUSD {
         return try await currencyConversionFromUSDRepository.fetchCurrencys(
             currencies: requestValue.currencies,
             source: requestValue.source

@@ -8,5 +8,8 @@
 import Foundation
 
 protocol CurrencyConversionFromUSDRepository {
-    func fetchCurrencys(currencies: [String], source: String) async throws -> CurrenciesFromUSD
+    func fetchCurrencys(
+        currencies: [String],
+        source: String
+    ) async throws -> CurrenciesFromUSD
 }

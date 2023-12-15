@@ -21,25 +21,37 @@ final class CurrencyConversionDIContainer {
 
 // MARK: Domain
 extension CurrencyConversionDIContainer {
-    func makeCurrencyConversionFromUSDUseCase() -> CurrencyConversionFromUSDUseCase {
-        DefaultCurrencyConversionFromUSDUseCase(currencyConversionFromUSDRepository: makeCurrencyConversionFromUSDRepository())
+    func makeCurrencyConversionFromUSDUseCase() 
+    -> CurrencyConversionFromUSDUseCase {
+        DefaultCurrencyConversionFromUSDUseCase(
+            currencyConversionFromUSDRepository: makeCurrencyConversionFromUSDRepository()
+        )
     }
 }
 
 // MARK: Data
 extension CurrencyConversionDIContainer {
-    func makeCurrencyConversionFromUSDRepository() -> CurrencyConversionFromUSDRepository {
-        DefaultCurrencyConversionFromUSDRepository(dataTransferService: dependencies.apiDataTransferService)
+    func makeCurrencyConversionFromUSDRepository() 
+    -> CurrencyConversionFromUSDRepository {
+        DefaultCurrencyConversionFromUSDRepository(
+            dataTransferService: dependencies.apiDataTransferService
+        )
     }
 }
 
 // MARK: Presentation
 extension CurrencyConversionDIContainer {
-    @MainActor func makeCurrencyConversionViewController() -> CurrencyConversionViewController {
-        CurrencyConversionViewController.create(with: makeCurrencyConversionViewModel())
+    @MainActor func makeCurrencyConversionViewController()
+    -> CurrencyConversionViewController {
+        CurrencyConversionViewController.create(
+            with: makeCurrencyConversionViewModel()
+        )
     }
     
-    @MainActor func makeCurrencyConversionViewModel() -> CurrencyConversionViewModel {
-        CurrencyConversionViewModel(currencyConversionFromUSDUseCase: makeCurrencyConversionFromUSDUseCase())
+    @MainActor func makeCurrencyConversionViewModel() 
+    -> CurrencyConversionViewModel {
+        CurrencyConversionViewModel(
+            currencyConversionFromUSDUseCase: makeCurrencyConversionFromUSDUseCase()
+        )
     }
 }

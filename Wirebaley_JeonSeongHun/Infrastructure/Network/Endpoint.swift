@@ -51,30 +51,44 @@ extension RequestTable {
     }
     
     private func url(with config: NetworkConfigurable) throws -> URL {
-        let baseURL = config.baseURL.absoluteString.last != "/" ? config.baseURL.absoluteString + "/" : config.baseURL.absoluteString
+        let baseURL = config.baseURL.absoluteString.last != "/" ? 
+        config.baseURL.absoluteString + "/" :
+        config.baseURL.absoluteString
         
         let endpoint = baseURL.appending(path)
         
-        guard var urlComponents = URLComponents(string: endpoint) else { throw RequestGenerationError.components }
+        guard var urlComponents = URLComponents(string: endpoint) else {
+            throw RequestGenerationError.components
+        }
         
         var urlQueryItmes: [URLQueryItem] = []
         
         /// 기본 query
         config.queryParameters.forEach {
-            urlQueryItmes.append(URLQueryItem(name: $0.key, value: $0.value))
+            urlQueryItmes.append(URLQueryItem(
+                name: $0.key,
+                value: $0.value)
+            )
         }
         
         if let queryParametersEncodable = queryParametersEncodable {
             let data = try JSONEncoder().encode(queryParametersEncodable)
-            let queryParameters = try JSONSerialization.jsonObject(with: data) as? [String: Any] ?? queryParameters
+            let queryParameters = try JSONSerialization.jsonObject(with: data) 
+                as? [String: Any] ?? queryParameters
             
             queryParameters.forEach {
-                urlQueryItmes.append(URLQueryItem(name: $0.key, value: "\($0.value)"))
+                urlQueryItmes.append(URLQueryItem(
+                    name: $0.key,
+                    value: "\($0.value)")
+                )
             }
         } else {
             /// 추가된 query
             queryParameters.forEach {
-                urlQueryItmes.append(URLQueryItem(name: $0.key, value: "\($0.value)"))
+                urlQueryItmes.append(URLQueryItem(
+                    name: $0.key,
+                    value: "\($0.value)")
+                )
             }
         }
         
