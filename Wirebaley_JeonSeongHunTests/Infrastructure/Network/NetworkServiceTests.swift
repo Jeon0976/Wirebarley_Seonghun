@@ -122,7 +122,6 @@ final class NetworkServiceTests: XCTestCase {
             sessionManager: mockNetworkSessionManager,
             logger: mockNetworkErrorLogger
         )
-        var resultError : MockNetworkError!
         var resultStatusCode: Int!
         
         // when
