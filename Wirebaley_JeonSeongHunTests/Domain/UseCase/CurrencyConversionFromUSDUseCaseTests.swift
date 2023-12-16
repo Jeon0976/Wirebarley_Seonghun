@@ -65,6 +65,7 @@ final class CurrencyConversionFromUSDUseCaseTests: XCTestCase {
         )
         
         var result: CurrenciesFromUSD?
+        
         // when
         do {
             result = try await usecase.execute(requestValue: requestValue)
@@ -81,13 +82,16 @@ final class CurrencyConversionFromUSDUseCaseTests: XCTestCase {
             currencies: ["KRW", "JPY", "PHP"]
         )
         repository.isReturnError = true
+        var resultError: MockError?
         
         // when
         do {
             let _ = try await usecase.execute(requestValue: requestValue)
         } catch let error as MockError {
-            // then
-            XCTAssertEqual(error, MockError.failedFetcing)
+            resultError = error
         } catch { }
+        
+        // then
+        XCTAssertEqual(resultError, MockError.failedFetcing)
     }
 }

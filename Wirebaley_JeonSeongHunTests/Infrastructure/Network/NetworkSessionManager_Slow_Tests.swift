@@ -42,6 +42,7 @@ final class NetworkSessionManagerTests: XCTestCase {
         let request = URLRequest(url: url)
         
         var data = Data()
+        
         // when
         do {
             data = try await sessionManager.request(request)
@@ -49,6 +50,7 @@ final class NetworkSessionManagerTests: XCTestCase {
             
         }
         
+        // then
         XCTAssertNotNil(data)
     }
     
@@ -61,6 +63,7 @@ final class NetworkSessionManagerTests: XCTestCase {
         let request = URLRequest(url: url)
         
         var networkError: Error?
+        
         // when
         do {
             let _ = try await sessionManager.request(request)
@@ -68,6 +71,7 @@ final class NetworkSessionManagerTests: XCTestCase {
             networkError = error
         }
         
+        // then
         XCTAssertNotNil(networkError)
     }
 }

@@ -22,7 +22,6 @@ final class AppDIContainer {
     }()
     
     func makeCurrencyConversionDIContainer() -> CurrencyConversionDIContainer {
-        
         let dependencies = CurrencyConversionDIContainer.Dependencies(
             apiDataTransferService: apiDataTransferService
         )

@@ -15,12 +15,6 @@ enum NetworkError: Error {
     case urlGeneration
 }
 
-protocol NetworkCancellable {
-    func cancel()
-}
-
-extension URLSessionTask: NetworkCancellable { }
-
 protocol NetworkService {
     func request(endPoint: RequestTable) async throws -> Data
 }

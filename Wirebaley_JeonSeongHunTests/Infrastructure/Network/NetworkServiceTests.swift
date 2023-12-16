@@ -110,6 +110,7 @@ final class NetworkServiceTests: XCTestCase {
         )
                 
         var data = Data()
+        
         // when
         do {
             data = try await networkService.request(
@@ -159,7 +160,7 @@ final class NetworkServiceTests: XCTestCase {
             }
         } catch { }
 
-        
+        // then
         XCTAssertEqual(resultStatusCode, 400)
     }
     
