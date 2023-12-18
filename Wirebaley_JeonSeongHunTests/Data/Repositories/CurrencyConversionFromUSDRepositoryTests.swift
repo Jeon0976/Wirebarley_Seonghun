@@ -34,9 +34,9 @@ final class CurrencyConversionFromUSDRepositoryTests: XCTestCase {
         // then
         XCTAssertEqual(endpoint.path, "live")
         XCTAssertEqual(endpoint.method, .get)
-        XCTAssertEqual(endpoint.queryParametersEncodable 
-                        as? CurrenciesConversionRequestDTO,
-                       requestDTO
+        XCTAssertEqual(
+            endpoint.queryParametersEncodable as? CurrenciesConversionRequestDTO,
+            requestDTO
         )
     }
     

@@ -19,14 +19,14 @@ enum HTTPMethodType: String {
 protocol RequestTable {
     var path: String { get }
     var method: HTTPMethodType { get }
-    var headerParameters: [String: String]? { get }
+    var headerParameters: [String: String] { get }
     var queryParametersEncodable: Encodable? { get }
     var queryParameters: [String: Any] { get }
     var bodyParametersEncodable: Encodable? { get }
     var bodyParameters: [String: Any] { get }
     var bodyEncoder: BodyEncoder { get }
     
-    func urlRequest(with networkConfig: NetworkConfigurable) throws -> URLRequest
+    func urlRequest(with config: NetworkConfigurable) throws -> URLRequest
 }
 
 extension RequestTable {
@@ -35,9 +35,7 @@ extension RequestTable {
         var urlRequest = URLRequest(url: url)
         var allHeaders: [String: String] = config.headers
         
-        if let headerParameters = headerParameters {
-            headerParameters.forEach { allHeaders.updateValue($1, forKey: $0) }
-        }
+        headerParameters.forEach { allHeaders.updateValue($1, forKey: $0)}
         
         if let bodyParametersEncodable = bodyParametersEncodable {
             let encodedBody = bodyEncoder.encode(bodyParametersEncodable)
@@ -62,6 +60,7 @@ extension RequestTable {
         }
         
         var urlQueryItmes: [URLQueryItem] = []
+        let queryParameters = try queryParametersEncodable?.toDictionary() ?? self.queryParameters
         
         /// 기본 query
         config.queryParameters.forEach {
@@ -71,29 +70,18 @@ extension RequestTable {
             )
         }
         
-        if let queryParametersEncodable = queryParametersEncodable {
-            let data = try JSONEncoder().encode(queryParametersEncodable)
-            let queryParameters = try JSONSerialization.jsonObject(with: data) 
-                as? [String: Any] ?? queryParameters
-            
-            queryParameters.forEach {
-                urlQueryItmes.append(URLQueryItem(
+        /// 추가된 query
+        queryParameters.forEach {
+            urlQueryItems.append(
+                URLQueryItem(
                     name: $0.key,
-                    value: "\($0.value)")
+                    value: "\($0.value)"
                 )
-            }
-        } else {
-            /// 추가된 query
-            queryParameters.forEach {
-                urlQueryItmes.append(URLQueryItem(
-                    name: $0.key,
-                    value: "\($0.value)")
-                )
-            }
+            )
         }
         
-        urlComponents.queryItems = urlQueryItmes
-        
+        urlComponents.queryItems = !urlQueryItmes.isEmpty ? urlQueryItmes : nil
+
         guard let url = urlComponents.url else { throw
             RequestGenerationError.components
         }
@@ -129,7 +117,7 @@ final class Endpoint<R>: ResponseRequestable {
     
     let path: String
     let method: HTTPMethodType
-    let headerParameters: [String : String]?
+    let headerParameters: [String : String]
     let queryParametersEncodable: Encodable?
     let queryParameters: [String : Any]
     let bodyParametersEncodable: Encodable?
@@ -141,7 +129,7 @@ final class Endpoint<R>: ResponseRequestable {
     init(
         path: String,
         method: HTTPMethodType,
-        headerParameters: [String : String]? = nil,
+        headerParameters: [String : String] = [:],
         queryParametersEncodable: Encodable? = nil,
         queryParameters: [String: Any] = [:],
         bodyParametersEncodable: Encodable? = nil,
@@ -158,5 +146,14 @@ final class Endpoint<R>: ResponseRequestable {
         self.bodyParameters = bodyParameters
         self.bodyEncoder = bodyEncoder
         self.responseDecoder = responseDecoder
+    }
+}
+
+private extension Encodable {
+    func toDictionary() throws -> [String: Any]? {
+        let data = try JSONEncoder().encode(self)
+        let jsonData = try JSONSerialization.jsonObject(with: data)
+        
+        return jsonData as? [String: Any]
     }
 }
