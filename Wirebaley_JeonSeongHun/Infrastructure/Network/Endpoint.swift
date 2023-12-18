@@ -59,12 +59,12 @@ extension RequestTable {
             throw RequestGenerationError.components
         }
         
-        var urlQueryItmes: [URLQueryItem] = []
+        var urlQueryItems: [URLQueryItem] = []
         let queryParameters = try queryParametersEncodable?.toDictionary() ?? self.queryParameters
         
         /// 기본 query
         config.queryParameters.forEach {
-            urlQueryItmes.append(URLQueryItem(
+            urlQueryItems.append(URLQueryItem(
                 name: $0.key,
                 value: $0.value)
             )
@@ -80,7 +80,7 @@ extension RequestTable {
             )
         }
         
-        urlComponents.queryItems = !urlQueryItmes.isEmpty ? urlQueryItmes : nil
+        urlComponents.queryItems = !urlQueryItems.isEmpty ? urlQueryItems : nil
 
         guard let url = urlComponents.url else { throw
             RequestGenerationError.components
