@@ -14,9 +14,7 @@ enum DataTransferError: Error {
     case resolvedNetworkFailure(Error)
 }
 
-protocol DataTransferService {
-    typealias CompletionHandler<T> = (Result<T, DataTransferError>) -> Void
-    
+protocol DataTransferService {    
     func request<T: Decodable, E: ResponseRequestable>(
         with endponit: E
     ) async throws -> T where E.Response == T
