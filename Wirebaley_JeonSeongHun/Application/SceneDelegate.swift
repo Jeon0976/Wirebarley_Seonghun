@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        /// scene delegate 테스트 코드에서 실행 안되도록하는 조치 ->  역활별 테스트 명확성을 위해
+        /// scene delegate 테스트 코드에서 실행 안되도록하는 조치 ->  역할별 테스트 명확성을 위해
         /// 참고: https://stackoverflow.com/questions/27500940/how-to-let-the-app-know-if-its-running-unit-tests-in-a-pure-swift-project
 #if DEBUG
         if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
