@@ -72,7 +72,7 @@ final class DatatransferServiceTests: XCTestCase {
     func test_유효한_JSON데이터_받을때() async {
         // given
         let networkConfig = MockNetworkConfigurable()
-        var networkSessionManager = MockNetworkSessionManager()
+        let networkSessionManager = MockNetworkSessionManager()
         
         let responseData = #"{"test": "test"}"#.data(using: .utf8)!
         
@@ -111,7 +111,7 @@ final class DatatransferServiceTests: XCTestCase {
     func test_유효하지않은_JSON데이터_받을때() async {
         // given
         let networkConfig = MockNetworkConfigurable()
-        var networkSessionManager = MockNetworkSessionManager()
+        let networkSessionManager = MockNetworkSessionManager()
         
         let responseData = #"{"test": 1}"#.data(using: .utf8)!
         

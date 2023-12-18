@@ -47,7 +47,7 @@ final class Wirebaley_JeonSeongHunUITests: XCTestCase {
     func test_값_초과하고_알람_확인하기() throws {
         // given
         let textField = app.textFields["amountTextField"]
-        let alertButton = app.alerts.buttons["OK"]
+        let alertButton = app.alerts.buttons["OKAction"]
         
         
         // when
@@ -56,5 +56,4 @@ final class Wirebaley_JeonSeongHunUITests: XCTestCase {
                 
         // then
         XCTAssertTrue(alertButton.exists)
-    }
-}
+    }}

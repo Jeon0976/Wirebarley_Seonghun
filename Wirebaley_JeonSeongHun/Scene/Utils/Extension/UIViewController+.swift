@@ -21,12 +21,10 @@ extension UIViewController {
         )
         
         let title = NSLocalizedString("OK", comment: "")
+        let alertAction = UIAlertAction(title: title, style: .default)
+        alertAction.accessibilityIdentifier = "OKAction"
         
-        alert.addAction(UIAlertAction(
-            title: title,
-            style: .default,
-            handler: nil)
-        )
+        alert.addAction(alertAction)
         
         self.present(
             alert,
