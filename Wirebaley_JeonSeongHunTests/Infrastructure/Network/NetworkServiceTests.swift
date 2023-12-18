@@ -12,7 +12,7 @@ import XCTest
 private struct MockEndpoint: RequestTable {
     var path: String
     var method: HTTPMethodType
-    var headerParameters: [String : String]? = [:]
+    var headerParameters: [String : String] = [:]
     var queryParametersEncodable: Encodable?
     var queryParameters: [String : Any] = [:]
     var bodyParametersEncodable: Encodable?
