@@ -14,7 +14,7 @@ enum DataTransferError: Error {
     case resolvedNetworkFailure(Error)
 }
 
-protocol DataTransferService {    
+protocol DataTransferService {
     func request<T: Decodable, E: ResponseRequestable>(
         with endponit: E
     ) async throws -> T where E.Response == T
@@ -47,8 +47,9 @@ final class DefaultDataTransferService: DataTransferService {
         self.errorLogger = errorLogger
     }
     
-    func request<T, E>(with endponit: E
-    ) async throws -> T where T : Decodable, T == E.Response, E : ResponseRequestable {
+    func request<T: Decodable, E: ResponseRequestable>(
+        with endponit: E
+    ) async throws -> T where T == E.Response {
         do {
             let data = try await networkService.request(endPoint: endponit)
             do {
